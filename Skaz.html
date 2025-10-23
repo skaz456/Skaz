@@ -1,44 +1,687 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SKAZ | Boy Pho</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô Phỏng Máy Chiếu Kỹ Thuật Số - Nhóm 4 9A12</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+        body {
+            background: #0a0a12;
+            color: #e0e0ff;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-body {
-    margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at bottom, #000011 20%, #000 80%);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    font-family: 'Poppins', sans-serif;
-    position: relative;
-}
+        .header {
+            text-align: center;
+            padding: 10px;
+            background: rgba(20, 20, 40, 0.8);
+            border-bottom: 1px solid #2a2a3a;
+            z-index: 100;
+        }
 
-/* Di LED chy tr�n u */
-.wave {
-    position: absolute;
-    top: 0;
-    left: -50%;
-    width: 200%;
-    height: 140px;
-    background: linear-gradient(90deg, transparent, #00ffff, #0077ff, transparent);
-    filter: blur(20px);
-    animation: waveMove 4s linear infinite;
-    opacity: 0.8;
-}
-@keyframes waveMove {
-    0% { transform: translateX(0); }
+        .header h1 {
+            font-size: 24px;
+            color: #a0a0ff;
+            margin-bottom: 5px;
+        }
+
+        .header .team-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8a8aff;
+            text-shadow: 0 0 10px rgba(138, 138, 255, 0.5);
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Phần máy chiếu (bên trái) */
+        .projector {
+            width: 40%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(to right, #1a1a2a, #0f0f1a);
+            border-right: 1px solid #2a2a3a;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .projector-body {
+            width: 90%;
+            height: 70%;
+            background: linear-gradient(to bottom, #222233, #111122);
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 
+                0 0 20px rgba(0, 0, 0, 0.8),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .projector-interior {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            padding: 20px;
+        }
+
+        .component {
+            position: absolute;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .component:hover {
+            filter: drop-shadow(0 0 8px rgba(100, 150, 255, 0.7));
+        }
+
+        .light-source {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #ffcc00, #ff6600 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 20px #ff9900, 0 0 40px rgba(255, 153, 0, 0.5);
+        }
+
+        .color-wheel {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            top: 50%;
+            left: 25%;
+            transform: translateY(-50%);
+            background: conic-gradient(
+                from 0deg,
+                #ff0000 0% 25%,
+                #00ff00 25% 50%,
+                #0000ff 50% 75%,
+                #ffff00 75% 100%
+            );
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            animation: rotate-wheel 8s linear infinite;
+        }
+
+        @keyframes rotate-wheel {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .chip {
+            width: 100px;
+            height: 70px;
+            background: linear-gradient(45deg, #333344, #222233);
+            top: 50%;
+            left: 40%;
+            transform: translateY(-50%);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
+            overflow: hidden;
+        }
+
+        .pixel {
+            width: 8px;
+            height: 8px;
+            margin: 1px;
+            background: #555566;
+            border-radius: 1px;
+        }
+
+        .lens-system {
+            width: 120px;
+            height: 60px;
+            background: radial-gradient(ellipse at center, 
+                rgba(200, 220, 255, 0.1) 0%, 
+                rgba(100, 150, 255, 0.3) 40%, 
+                rgba(50, 100, 200, 0.5) 70%, 
+                rgba(30, 60, 120, 0.7) 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 60%;
+            transform: translateY(-50%);
+            box-shadow: 
+                0 0 20px rgba(100, 150, 255, 0.5),
+                inset 0 0 30px rgba(200, 220, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lens-flare {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, 
+                rgba(255, 255, 255, 0.4) 0%, 
+                rgba(200, 220, 255, 0.2) 30%, 
+                transparent 70%);
+            border-radius: 50%;
+        }
+
+        .beam-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Phần màn chiếu (bên phải) */
+        .screen {
+            width: 60%;
+            height: 100%;
+            position: relative;
+            background: #050510;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .projection {
+            width: 90%;
+            height: 80%;
+            background: #0a0a15;
+            position: relative;
+            box-shadow: 
+                0 0 50px rgba(0, 0, 0, 0.8),
+                inset 0 0 100px rgba(0, 0, 0, 0.9);
+            border: 1px solid #1a1a2a;
+            overflow: hidden;
+        }
+
+        .projected-image {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, 
+                rgba(30, 30, 50, 0.8) 0%, 
+                rgba(10, 10, 20, 0.9) 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            filter: blur(0px);
+            transition: filter 0.3s ease;
+        }
+
+        .bear-svg {
+            width: 60%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, 
+                transparent 30%, 
+                rgba(0, 0, 0, 0.7) 80%);
+            pointer-events: none;
+        }
+
+        .noise {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBvcGFjaXR5PSIwLjAzIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIwLjQiPjwvcmVjdD48L3N2Zz4=');
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background: rgba(10, 10, 20, 0.7);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid #2a2a3a;
+            z-index: 10;
+        }
+
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .btn {
+            background: linear-gradient(to bottom, #2a2a4a, #1a1a3a);
+            border: 1px solid #3a3a5a;
+            color: #e0e0ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to bottom, #3a3a5a, #2a2a4a);
+            box-shadow: 0 0 8px rgba(100, 150, 255, 0.5);
+        }
+
+        .btn.active {
+            background: linear-gradient(to bottom, #4a4a7a, #3a3a6a);
+            box-shadow: 0 0 10px rgba(100, 150, 255, 0.7);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider-label {
+            font-size: 12px;
+            min-width: 70px;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 6px;
+            background: linear-gradient(to right, #1a1a3a, #4a4a7a);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #6a6aaa, #4a4a8a);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: rgba(20, 20, 40, 0.9);
+            border: 1px solid #3a3a5a;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            max-width: 200px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Thông tin mục đích */
+        .purpose {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            font-size: 11px;
+            color: #5a5a7a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .projector, .screen {
+                width: 100%;
+                height: 50%;
+            }
+            
+            .control-group {
+                max-width: 100%;
+                gap: 10px;
+            }
+            
+            .slider {
+                width: 100px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .header .team-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header với tên nhóm -->
+    <div class="header">
+        <h1>Mô Phỏng Máy Chiếu Kỹ Thuật Số</h1>
+        <div class="team-name">Nhóm 4 9A12</div>
+    </div>
+    
+    <div class="container">
+        <!-- Phần máy chiếu (bên trái) -->
+        <div class="projector">
+            <div class="projector-body">
+                <div class="projector-interior">
+                    <!-- Các thành phần máy chiếu -->
+                    <div class="component light-source" data-tooltip="Bóng đèn: Nguồn sáng chính của máy chiếu"></div>
+                    <div class="component color-wheel" data-tooltip="Bánh xe màu: Tạo ra các màu sắc cơ bản bằng cách quay"></div>
+                    <div class="component chip" data-tooltip="Chip DLP: Điều khiển từng pixel để tạo hình ảnh">
+                        <!-- Tạo hiệu ứng pixel grid -->
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                    </div>
+                    <div class="component lens-system" data-tooltip="Hệ thấu kính: Hội tụ và phóng hình ảnh lên màn chiếu">
+                        <div class="lens-flare"></div>
+                    </div>
+                    
+                    <!-- Canvas cho chùm tia -->
+                    <canvas class="beam-canvas" id="beamCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Phần màn chiếu (bên phải) -->
+        <div class="screen">
+            <div class="projection">
+                <div class="projected-image" id="projectedImage">
+                    <!-- Hình ảnh chiếu lên màn -->
+                    <svg class="bear-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100,40 C120,20 160,30 160,70 C160,110 140,130 120,150 C140,170 160,190 140,210 C120,230 80,230 60,210 C40,190 60,170 80,150 C60,130 40,110 40,70 C40,30 80,20 100,40 Z" fill="#8B7355"/>
+                        <circle cx="80" cy="90" r="10" fill="#333"/>
+                        <circle cx="120" cy="90" r="10" fill="#333"/>
+                        <ellipse cx="100" cy="120" rx="20" ry="10" fill="#654321"/>
+                        <path d="M70,140 Q100,160 130,140" stroke="#654321" stroke-width="5" fill="none"/>
+                    </svg>
+                </div>
+                <div class="vignette"></div>
+                <div class="noise"></div>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <button class="btn" id="powerBtn">Bật Máy</button>
+                <button class="btn" id="rgbBtn">RGB: Tắt</button>
+                
+                <div class="slider-container">
+                    <span class="slider-label">Cường độ:</span>
+                    <input type="range" min="0" max="2" step="0.1" value="1" class="slider" id="intensitySlider">
+                </div>
+                
+                <div class="slider-container">
+                    <span class="slider-label">Tiêu cự:</span>
+                    <input type="range" min="0.5" max="1.6" step="0.1" value="1" class="slider" id="focusSlider">
+                </div>
+                
+                <div class="slider-container">
+                    <span class="slider-label">Bụi/Khói:</span>
+                    <input type="range" min="0" max="100" step="1" value="30" class="slider" id="particlesSlider">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tooltip -->
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Thông tin mục đích -->
+        <div class="purpose">
+            Mục đích học tập — mô phỏng nguyên lý hoạt động máy chiếu kỹ thuật số
+        </div>
+    </div>
+
+    <script>
+        // Khai báo biến toàn cục
+        let isPoweredOn = false;
+        let isRgbOn = false;
+        let intensity = 1;
+        let focus = 1;
+        let particleDensity = 30;
+        
+        // Lấy các phần tử DOM
+        const powerBtn = document.getElementById('powerBtn');
+        const rgbBtn = document.getElementById('rgbBtn');
+        const intensitySlider = document.getElementById('intensitySlider');
+        const focusSlider = document.getElementById('focusSlider');
+        const particlesSlider = document.getElementById('particlesSlider');
+        const beamCanvas = document.getElementById('beamCanvas');
+        const projectedImage = document.getElementById('projectedImage');
+        const tooltip = document.getElementById('tooltip');
+        
+        // Thiết lập canvas
+        const ctx = beamCanvas.getContext('2d');
+        beamCanvas.width = beamCanvas.offsetWidth;
+        beamCanvas.height = beamCanvas.offsetHeight;
+        
+        // Mảng chứa các hạt bụi
+        let particles = [];
+        
+        // Khởi tạo các hạt bụi
+        function initParticles() {
+            particles = [];
+            const count = Math.floor(particleDensity * (beamCanvas.width * beamCanvas.height) / 50000);
+            
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * beamCanvas.width,
+                    y: Math.random() * beamCanvas.height,
+                    size: Math.random() * 3 + 1,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random() * 0.5
+                });
+            }
+        }
+        
+        // Vẽ chùm tia
+        function drawBeam() {
+            // Xóa canvas
+            ctx.clearRect(0, 0, beamCanvas.width, beamCanvas.height);
+            
+            if (!isPoweredOn) return;
+            
+            // Tạo gradient cho chùm tia
+            const gradient = ctx.createLinearGradient(
+                beamCanvas.width * 0.1, beamCanvas.height / 2,
+                beamCanvas.width * 0.9, beamCanvas.height / 2
+            );
+            
+            // Màu sắc chùm tia phụ thuộc vào chế độ RGB
+            if (isRgbOn) {
+                gradient.addColorStop(0, `rgba(255, 0, 0, ${0.3 * intensity})`);
+                gradient.addColorStop(0.3, `rgba(0, 255, 0, ${0.4 * intensity})`);
+                gradient.addColorStop(0.6, `rgba(0, 0, 255, ${0.5 * intensity})`);
+                gradient.addColorStop(1, `rgba(255, 255, 255, ${0.6 * intensity})`);
+            } else {
+                gradient.addColorStop(0, `rgba(255, 200, 100, ${0.3 * intensity})`);
+                gradient.addColorStop(0.5, `rgba(255, 255, 200, ${0.5 * intensity})`);
+                gradient.addColorStop(1, `rgba(255, 255, 255, ${0.6 * intensity})`);
+            }
+            
+            // Vẽ chùm tia chính
+            ctx.beginPath();
+            ctx.moveTo(beamCanvas.width * 0.1, beamCanvas.height / 2 - 20);
+            ctx.bezierCurveTo(
+                beamCanvas.width * 0.3, beamCanvas.height / 2 - 40,
+                beamCanvas.width * 0.6, beamCanvas.height / 2 - 10,
+                beamCanvas.width * 0.9, beamCanvas.height / 2 - 100 * focus
+            );
+            ctx.lineTo(beamCanvas.width * 0.9, beamCanvas.height / 2 + 100 * focus);
+            ctx.bezierCurveTo(
+                beamCanvas.width * 0.6, beamCanvas.height / 2 + 10,
+                beamCanvas.width * 0.3, beamCanvas.height / 2 + 40,
+                beamCanvas.width * 0.1, beamCanvas.height / 2 + 20
+            );
+            ctx.closePath();
+            
+            // Tô màu chùm tia
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Thêm hiệu ứng glow
+            ctx.shadowBlur = 30;
+            ctx.shadowColor = isRgbOn ? 'rgba(150, 150, 255, 0.7)' : 'rgba(255, 220, 150, 0.7)';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            
+            // Vẽ các hạt bụi
+            drawParticles();
+        }
+        
+        // Vẽ các hạt bụi
+        function drawParticles() {
+            particles.forEach(particle => {
+                // Cập nhật vị trí
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                
+                // Đảm bảo hạt không ra khỏi canvas
+                if (particle.x < 0 || particle.x > beamCanvas.width) particle.speedX *= -1;
+                if (particle.y < 0 || particle.y > beamCanvas.height) particle.speedY *= -1;
+                
+                // Vẽ hạt
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity * intensity})`;
+                ctx.fill();
+            });
+        }
+        
+        // Cập nhật hình ảnh chiếu
+        function updateProjection() {
+            // Áp dụng hiệu ứng tiêu cự
+            projectedImage.style.filter = `blur(${Math.abs(1 - focus) * 3}px) brightness(${intensity})`;
+            
+            // Áp dụng hiệu ứng RGB nếu bật
+            if (isRgbOn) {
+                projectedImage.style.filter += ` hue-rotate(${Math.sin(Date.now() / 1000) * 30}deg)`;
+            }
+        }
+        
+        // Xử lý sự kiện
+        powerBtn.addEventListener('click', () => {
+            isPoweredOn = !isPoweredOn;
+            powerBtn.textContent = isPoweredOn ? 'Tắt Máy' : 'Bật Máy';
+            powerBtn.classList.toggle('active', isPoweredOn);
+            
+            // Khởi tạo lại các hạt khi bật máy
+            if (isPoweredOn) {
+                initParticles();
+            }
+        });
+        
+        rgbBtn.addEventListener('click', () => {
+            isRgbOn = !isRgbOn;
+            rgbBtn.textContent = `RGB: ${isRgbOn ? 'Bật' : 'Tắt'}`;
+            rgbBtn.classList.toggle('active', isRgbOn);
+        });
+        
+        intensitySlider.addEventListener('input', () => {
+            intensity = parseFloat(intensitySlider.value);
+        });
+        
+        focusSlider.addEventListener('input', () => {
+            focus = parseFloat(focusSlider.value);
+        });
+        
+        particlesSlider.addEventListener('input', () => {
+            particleDensity = parseInt(particlesSlider.value);
+            if (isPoweredOn) {
+                initParticles();
+            }
+        });
+        
+        // Xử lý tooltip
+        document.querySelectorAll('.component').forEach(component => {
+            component.addEventListener('mouseover', (e) => {
+                const rect = component.getBoundingClientRect();
+                tooltip.textContent = component.getAttribute('data-tooltip');
+                tooltip.style.left = `${rect.left + rect.width / 2}px`;
+                tooltip.style.top = `${rect.top - 10}px`;
+                tooltip.style.opacity = '1';
+                tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+            });
+            
+            component.addEventListener('mouseout', () => {
+                tooltip.style.opacity = '0';
+            });
+        });
+        
+        // Xử lý phím tắt
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                powerBtn.click();
+            } else if (e.code === 'KeyR') {
+                e.preventDefault();
+                rgbBtn.click();
+            }
+        });
+        
+        // Vòng lặp animation
+        function animate() {
+            drawBeam();
+            updateProjection();
+            requestAnimationFrame(animate);
+        }
+        
+        // Khởi tạo và bắt đầu animation
+        initParticles();
+        animate();
+        
+        // Xử lý resize window
+        window.addEventListener('resize', () => {
+            beamCanvas.width = beamCanvas.offsetWidth;
+            beamCanvas.height = beamCanvas.offsetHeight;
+            initParticles();
+        });
+    </script>
+</body>
+</html>    0% { transform: translateX(0); }
     100% { transform: translateX(50%); }
 }
 
-/* T�n SKAZ */
+/* Tên SKAZ */
 h1 {
     font-size: 90px;
     color: #00eaff;
@@ -55,7 +698,7 @@ h1 {
     100% { text-shadow: 0 0 40px #00ffff, 0 0 120px #00ffff; }
 }
 
-/* Icon mng x� hi */
+/* Icon mng xã hi */
 .social {
     display: flex;
     flex-direction: column;
@@ -106,7 +749,7 @@ footer {
     to { opacity: 1; }
 }
 
-/* Ht s�ng bay */
+/* Ht sáng bay */
 .particle {
     position: absolute;
     background: #00ffff;
@@ -125,7 +768,7 @@ footer {
 <body>
 <div class="wave"></div>
 
-<footer>� 2025 Skaz | A12 Deo So Mot Ai</footer>
+<footer>© 2025 Skaz | A12 Deo So Mot Ai</footer>
 
 <h1>SKAZ</h1>
 
@@ -160,4 +803,5 @@ for (let i = 0; i < 80; i++) {
 </script>
 
 </body>
+
 </html>
