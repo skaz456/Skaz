@@ -3,65 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Skaz - Định vị antiban. Giải pháp bảo mật và bảo vệ vị trí tối ưu.">
-    <title>Skaz - Định vị Antiban</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Mô Phỏng Máy Chiếu Kỹ Thuật Số - Nhóm 4 9A12</title>
     <style>
-        /* Biến CSS */
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #0f0f1a;
-            --neon-primary: #8a2be2;
-            --neon-secondary: #00ffff;
-            --neon-accent: #ff00ff;
-            --text-primary: #ffffff;
-            --text-secondary: #b3b3cc;
-            --glow-intensity: 0 0 10px;
-        }
-
-        /* Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        html, body {
-            height: 100%;
-            font-family: 'Share Tech Mono', monospace;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+        body {
+            background: #0a0a12;
+            color: #e0e0ff;
             overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            padding: 10px;
+            background: rgba(20, 20, 40, 0.8);
+            border-bottom: 1px solid #2a2a3a;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #a0a0ff;
+            margin-bottom: 5px;
+        }
+
+        .header .team-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8a8aff;
+            text-shadow: 0 0 10px rgba(138, 138, 255, 0.5);
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            height: 100%;
             position: relative;
         }
 
-        /* Background Layers */
-        .bg-grid {
+        /* Phần máy chiếu (bên trái) */
+        .projector {
+            width: 40%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(to right, #1a1a2a, #0f0f1a);
+            border-right: 1px solid #2a2a3a;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .projector-body {
+            width: 90%;
+            height: 70%;
+            background: linear-gradient(to bottom, #222233, #111122);
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 
+                0 0 20px rgba(0, 0, 0, 0.8),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .projector-interior {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            padding: 20px;
+        }
+
+        .component {
+            position: absolute;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .component:hover {
+            filter: drop-shadow(0 0 8px rgba(100, 150, 255, 0.7));
+        }
+
+        .light-source {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #ffcc00, #ff6600 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 20px #ff9900, 0 0 40px rgba(255, 153, 0, 0.5);
+        }
+
+        .color-wheel {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            top: 50%;
+            left: 25%;
+            transform: translateY(-50%);
+            background: conic-gradient(
+                from 0deg,
+                #ff0000 0% 25%,
+                #00ff00 25% 50%,
+                #0000ff 50% 75%,
+                #ffff00 75% 100%
+            );
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            animation: rotate-wheel 8s linear infinite;
+        }
+
+        @keyframes rotate-wheel {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .chip {
+            width: 100px;
+            height: 70px;
+            background: linear-gradient(45deg, #333344, #222233);
+            top: 50%;
+            left: 40%;
+            transform: translateY(-50%);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
+            overflow: hidden;
+        }
+
+        .pixel {
+            width: 8px;
+            height: 8px;
+            margin: 1px;
+            background: #555566;
+            border-radius: 1px;
+        }
+
+        .lens-system {
+            width: 120px;
+            height: 60px;
+            background: radial-gradient(ellipse at center, 
+                rgba(200, 220, 255, 0.1) 0%, 
+                rgba(100, 150, 255, 0.3) 40%, 
+                rgba(50, 100, 200, 0.5) 70%, 
+                rgba(30, 60, 120, 0.7) 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 60%;
+            transform: translateY(-50%);
+            box-shadow: 
+                0 0 20px rgba(100, 150, 255, 0.5),
+                inset 0 0 30px rgba(200, 220, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lens-flare {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, 
+                rgba(255, 255, 255, 0.4) 0%, 
+                rgba(200, 220, 255, 0.2) 30%, 
+                transparent 70%);
+            border-radius: 50%;
+        }
+
+        .beam-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(10, 10, 15, 0.9) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(10, 10, 15, 0.9) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-            opacity: 0.3;
+            pointer-events: none;
             z-index: 1;
         }
 
-        .bg-noise {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Phần màn chiếu (bên phải) */
+        .screen {
+            width: 60%;
+            height: 100%;
+            position: relative;
+            background: #050510;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .projection {
+            width: 90%;
+            height: 80%;
+            background: #0a0a15;
+            position: relative;
+            box-shadow: 
+                0 0 50px rgba(0, 0, 0, 0.8),
+                inset 0 0 100px rgba(0, 0, 0, 0.9);
+            border: 1px solid #1a1a2a;
+            overflow: hidden;
+        }
+
+        .projected-image {
             width: 100%;
             height: 100%;
-            background-image: url('data:image/png;base64,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');
-            opacity: 0.05;
-            z-index: 2;
+            background: radial-gradient(ellipse at center, 
+                rgba(30, 30, 50, 0.8) 0%, 
+                rgba(10, 10, 20, 0.9) 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            filter: blur(0px);
+            transition: filter 0.3s ease;
+        }
+
+        .bear-svg {
+            width: 60%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
 
         .vignette {
@@ -70,379 +241,439 @@
             left: 0;
             width: 100%;
             height: 100%;
-            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
-            z-index: 3;
+            background: radial-gradient(ellipse at center, 
+                transparent 30%, 
+                rgba(0, 0, 0, 0.7) 80%);
             pointer-events: none;
         }
 
-        .scan-line {
+        .noise {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--neon-secondary), transparent);
-            box-shadow: 0 0 10px var(--neon-secondary);
-            opacity: 0;
-            z-index: 4;
-            pointer-events: none;
-        }
-
-        /* Main Content */
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             height: 100%;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBvcGFjaXR5PSIwLjAzIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIwLjQiPjwvcmVjdD48L3N2Zz4=');
+            pointer-events: none;
+            mix-blend-mode: overlay;
         }
 
-        .main-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 3rem;
-            text-align: center;
-            text-shadow: 
-                var(--glow-intensity) var(--neon-primary),
-                0 0 20px var(--neon-primary),
-                0 0 30px var(--neon-primary);
-            color: var(--text-primary);
-            position: relative;
-            opacity: 0;
-            transform: translateZ(50px);
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.2em;
-            background-color: var(--neon-secondary);
-            margin-left: 5px;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-
-        .download-btn {
-            display: inline-block;
-            padding: 1.2rem 3rem;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-primary);
-            background: transparent;
-            border: 2px solid var(--neon-secondary);
-            border-radius: 4px;
-            text-decoration: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.3s ease;
-            box-shadow: 
-                var(--glow-intensity) var(--neon-secondary),
-                inset 0 0 15px rgba(0, 255, 255, 0.1);
-        }
-
-        .download-btn:hover, .download-btn:focus {
-            box-shadow: 
-                0 0 20px var(--neon-secondary),
-                inset 0 0 20px rgba(0, 255, 255, 0.3);
-            transform: translateY(30px) scale(1.05);
-            background: rgba(0, 255, 255, 0.1);
-        }
-
-        .download-btn:active {
-            transform: translateY(30px) scale(0.98);
-        }
-
-        .footer {
+        /* Controls */
+        .controls {
             position: absolute;
             bottom: 20px;
-            right: 20px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            opacity: 0.7;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background: rgba(10, 10, 20, 0.7);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid #2a2a3a;
             z-index: 10;
         }
 
-        /* Animations */
-        @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(50px, 50px);
-            }
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            max-width: 90%;
         }
 
-        @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
+        .btn {
+            background: linear-gradient(to bottom, #2a2a4a, #1a1a3a);
+            border: 1px solid #3a3a5a;
+            color: #e0e0ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+        .btn:hover {
+            background: linear-gradient(to bottom, #3a3a5a, #2a2a4a);
+            box-shadow: 0 0 8px rgba(100, 150, 255, 0.5);
         }
 
-        @keyframes glitch {
-            0% {
-                transform: translate(0);
-            }
-            20% {
-                transform: translate(-2px, 2px);
-            }
-            40% {
-                transform: translate(-2px, -2px);
-            }
-            60% {
-                transform: translate(2px, 2px);
-            }
-            80% {
-                transform: translate(2px, -2px);
-            }
-            100% {
-                transform: translate(0);
-            }
+        .btn.active {
+            background: linear-gradient(to bottom, #4a4a7a, #3a3a6a);
+            box-shadow: 0 0 10px rgba(100, 150, 255, 0.7);
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 
-                    var(--glow-intensity) var(--neon-secondary),
-                    inset 0 0 15px rgba(0, 255, 255, 0.1);
-            }
-            50% {
-                box-shadow: 
-                    0 0 25px var(--neon-secondary),
-                    inset 0 0 25px rgba(0, 255, 255, 0.2);
-            }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider-label {
+            font-size: 12px;
+            min-width: 70px;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 6px;
+            background: linear-gradient(to right, #1a1a3a, #4a4a7a);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #6a6aaa, #4a4a8a);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: rgba(20, 20, 40, 0.9);
+            border: 1px solid #3a3a5a;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            max-width: 200px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Thông tin mục đích */
+        .purpose {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            font-size: 11px;
+            color: #5a5a7a;
         }
 
         /* Responsive */
-        @media (max-width: 600px) {
-            .main-title {
-                font-size: 2rem;
-                letter-spacing: 0.1em;
-                margin-bottom: 2rem;
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
             }
-
-            .download-btn {
-                font-size: 1.2rem;
-                padding: 1rem 2rem;
+            
+            .projector, .screen {
+                width: 100%;
+                height: 50%;
             }
-        }
-
-        /* Utility Classes */
-        .fade-in {
-            animation: fadeIn 1s forwards;
-        }
-
-        .glitch-effect {
-            animation: glitch 0.3s;
-        }
-
-        .pulse-effect {
-            animation: pulse 2s infinite;
-        }
-
-        .no-js-warning {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px;
-            background: #ff0000;
-            color: white;
-            text-align: center;
-            z-index: 100;
+            
+            .control-group {
+                max-width: 100%;
+                gap: 10px;
+            }
+            
+            .slider {
+                width: 100px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .header .team-name {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Background layers -->
-    <div class="bg-grid"></div>
-    <div class="bg-noise"></div>
-    <div class="vignette"></div>
-    <div class="scan-line"></div>
-
-    <!-- Main content -->
+    <!-- Header với tên nhóm -->
+    <div class="header">
+        <h1>Mô Phỏng Máy Chiếu Kỹ Thuật Số</h1>
+        <div class="team-name">Nhóm 4 9A12</div>
+    </div>
+    
     <div class="container">
-        <h1 class="main-title" id="typing-text">
-            <span id="typed-text"></span><span class="cursor"></span>
-        </h1>
+        <!-- Phần máy chiếu (bên trái) -->
+        <div class="projector">
+            <div class="projector-body">
+                <div class="projector-interior">
+                    <!-- Các thành phần máy chiếu -->
+                    <div class="component light-source" data-tooltip="Bóng đèn: Nguồn sáng chính của máy chiếu"></div>
+                    <div class="component color-wheel" data-tooltip="Bánh xe màu: Tạo ra các màu sắc cơ bản bằng cách quay"></div>
+                    <div class="component chip" data-tooltip="Chip DLP: Điều khiển từng pixel để tạo hình ảnh">
+                        <!-- Tạo hiệu ứng pixel grid -->
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                    </div>
+                    <div class="component lens-system" data-tooltip="Hệ thấu kính: Hội tụ và phóng hình ảnh lên màn chiếu">
+                        <div class="lens-flare"></div>
+                    </div>
+                    
+                    <!-- Canvas cho chùm tia -->
+                    <canvas class="beam-canvas" id="beamCanvas"></canvas>
+                </div>
+            </div>
+        </div>
         
-        <a href="https://www.mediafire.com/file/y63a8ubl68dqws0/Skazdz.zip/file" 
-           class="download-btn" 
-           id="download-btn"
-           target="_blank" 
-           rel="noopener noreferrer"
-           aria-label="Tải xuống Skaz Antiban">
-            TẢI SKAZ
-        </a>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        © 2025 Skaz
-    </div>
-
-    <!-- No JS Warning -->
-    <div class="no-js-warning" id="no-js-warning">
-        JavaScript bị tắt. Một số hiệu ứng có thể không hoạt động.
+        <!-- Phần màn chiếu (bên phải) -->
+        <div class="screen">
+            <div class="projection">
+                <div class="projected-image" id="projectedImage">
+                    <!-- Hình ảnh chiếu lên màn -->
+                    <svg class="bear-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100,40 C120,20 160,30 160,70 C160,110 140,130 120,150 C140,170 160,190 140,210 C120,230 80,230 60,210 C40,190 60,170 80,150 C60,130 40,110 40,70 C40,30 80,20 100,40 Z" fill="#8B7355"/>
+                        <circle cx="80" cy="90" r="10" fill="#333"/>
+                        <circle cx="120" cy="90" r="10" fill="#333"/>
+                        <ellipse cx="100" cy="120" rx="20" ry="10" fill="#654321"/>
+                        <path d="M70,140 Q100,160 130,140" stroke="#654321" stroke-width="5" fill="none"/>
+                    </svg>
+                </div>
+                <div class="vignette"></div>
+                <div class="noise"></div>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <button class="btn" id="powerBtn">Bật Máy</button>
+                <button class="btn" id="rgbBtn">RGB: Tắt</button>
+                
+                <div class="slider-container">
+                    <span class="slider-label">Cường độ:</span>
+                    <input type="range" min="0" max="2" step="0.1" value="1" class="slider" id="intensitySlider">
+                </div>
+                
+                <div class="slider-container">
+                    <span class="slider-label">Tiêu cự:</span>
+                    <input type="range" min="0.5" max="1.6" step="0.1" value="1" class="slider" id="focusSlider">
+                </div>
+                
+                <div class="slider-container">
+                    <span class="slider-label">Bụi/Khói:</span>
+                    <input type="range" min="0" max="100" step="1" value="30" class="slider" id="particlesSlider">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tooltip -->
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Thông tin mục đích -->
+        <div class="purpose">
+            Mục đích học tập — mô phỏng nguyên lý hoạt động máy chiếu kỹ thuật số
+        </div>
     </div>
 
     <script>
-        // Hiển thị cảnh báo nếu JS bị tắt
-        document.getElementById('no-js-warning').style.display = 'none';
+        // Khai báo biến toàn cục
+        let isPoweredOn = false;
+        let isRgbOn = false;
+        let intensity = 1;
+        let focus = 1;
+        let particleDensity = 30;
         
-        // Khởi tạo biến
-        const titleText = "ĐỊNH VỊ ANTIBAN";
-        const typingElement = document.getElementById('typed-text');
-        const cursorElement = document.querySelector('.cursor');
-        const downloadBtn = document.getElementById('download-btn');
-        const mainTitle = document.getElementById('typing-text');
-        const scanLine = document.querySelector('.scan-line');
+        // Lấy các phần tử DOM
+        const powerBtn = document.getElementById('powerBtn');
+        const rgbBtn = document.getElementById('rgbBtn');
+        const intensitySlider = document.getElementById('intensitySlider');
+        const focusSlider = document.getElementById('focusSlider');
+        const particlesSlider = document.getElementById('particlesSlider');
+        const beamCanvas = document.getElementById('beamCanvas');
+        const projectedImage = document.getElementById('projectedImage');
+        const tooltip = document.getElementById('tooltip');
         
-        // Hàm gõ chữ
-        function typeWriter(text, element, speed, callback) {
-            let i = 0;
-            element.textContent = '';
+        // Thiết lập canvas
+        const ctx = beamCanvas.getContext('2d');
+        beamCanvas.width = beamCanvas.offsetWidth;
+        beamCanvas.height = beamCanvas.offsetHeight;
+        
+        // Mảng chứa các hạt bụi
+        let particles = [];
+        
+        // Khởi tạo các hạt bụi
+        function initParticles() {
+            particles = [];
+            const count = Math.floor(particleDensity * (beamCanvas.width * beamCanvas.height) / 50000);
             
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else {
-                    cursorElement.style.animation = 'none';
-                    if (callback) callback();
-                }
-            }
-            
-            type();
-        }
-        
-        // Hàm quét dòng
-        function scanLineEffect() {
-            scanLine.style.opacity = '1';
-            scanLine.style.top = '0';
-            
-            setTimeout(() => {
-                scanLine.style.transition = 'top 0.8s ease';
-                scanLine.style.top = '100%';
-                
-                setTimeout(() => {
-                    scanLine.style.opacity = '0';
-                    scanLine.style.transition = 'none';
-                    scanLine.style.top = '0';
-                }, 1000);
-            }, 300);
-        }
-        
-        // Hàm hiển thị nút
-        function showDownloadButton() {
-            downloadBtn.style.transition = 'opacity 1s ease, transform 1s ease';
-            downloadBtn.style.opacity = '1';
-            downloadBtn.style.transform = 'translateY(0)';
-            
-            setTimeout(() => {
-                downloadBtn.classList.add('pulse-effect');
-            }, 1500);
-        }
-        
-        // Hiệu ứng glitch khi click nút
-        function addGlitchEffect() {
-            downloadBtn.classList.add('glitch-effect');
-            setTimeout(() => {
-                downloadBtn.classList.remove('glitch-effect');
-            }, 600);
-        }
-        
-        // Hiệu ứng parallax khi di chuột
-        function handleMouseMove(e) {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            const container = document.querySelector('.container');
-            
-            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        }
-        
-        // Khởi tạo trang
-        function init() {
-            // Fade-in background
-            document.body.classList.add('fade-in');
-            
-            // Bắt đầu animation sau 0.8s
-            setTimeout(() => {
-                // Bắt đầu hiệu ứng gõ chữ
-                typeWriter(titleText, typingElement, 100, () => {
-                    // Sau khi gõ xong
-                    setTimeout(() => {
-                        // Hiệu ứng quét dòng
-                        scanLineEffect();
-                        
-                        // Hiển thị nút sau khi quét
-                        setTimeout(showDownloadButton, 800);
-                    }, 300);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * beamCanvas.width,
+                    y: Math.random() * beamCanvas.height,
+                    size: Math.random() * 3 + 1,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random() * 0.5
                 });
-                
-                // Hiển thị tiêu đề
-                mainTitle.style.opacity = '1';
-            }, 800);
-            
-            // Thêm sự kiện di chuột cho parallax
-            document.addEventListener('mousemove', handleMouseMove);
-            
-            // Thêm sự kiện click cho nút
-            downloadBtn.addEventListener('click', addGlitchEffect);
-            
-            // Thêm sự kiện keyboard
-            downloadBtn.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    addGlitchEffect();
-                }
-            });
-        }
-        
-        // Chạy khi trang đã tải xong
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-        
-        // Fallback nếu JS bị tắt
-        document.addEventListener('DOMContentLoaded', function() {
-            const noScriptElements = document.querySelectorAll('.no-js');
-            noScriptElements.forEach(el => {
-                el.style.display = 'block';
-            });
-            
-            // Hiển thị tiêu đề ngay lập tức nếu JS bị tắt
-            if (typingElement.textContent === '') {
-                typingElement.textContent = titleText;
-                mainTitle.style.opacity = '1';
-                downloadBtn.style.opacity = '1';
-                downloadBtn.style.transform = 'translateY(0)';
             }
+        }
+        
+        // Vẽ chùm tia
+        function drawBeam() {
+            // Xóa canvas
+            ctx.clearRect(0, 0, beamCanvas.width, beamCanvas.height);
+            
+            if (!isPoweredOn) return;
+            
+            // Tạo gradient cho chùm tia
+            const gradient = ctx.createLinearGradient(
+                beamCanvas.width * 0.1, beamCanvas.height / 2,
+                beamCanvas.width * 0.9, beamCanvas.height / 2
+            );
+            
+            // Màu sắc chùm tia phụ thuộc vào chế độ RGB
+            if (isRgbOn) {
+                gradient.addColorStop(0, `rgba(255, 0, 0, ${0.3 * intensity})`);
+                gradient.addColorStop(0.3, `rgba(0, 255, 0, ${0.4 * intensity})`);
+                gradient.addColorStop(0.6, `rgba(0, 0, 255, ${0.5 * intensity})`);
+                gradient.addColorStop(1, `rgba(255, 255, 255, ${0.6 * intensity})`);
+            } else {
+                gradient.addColorStop(0, `rgba(255, 200, 100, ${0.3 * intensity})`);
+                gradient.addColorStop(0.5, `rgba(255, 255, 200, ${0.5 * intensity})`);
+                gradient.addColorStop(1, `rgba(255, 255, 255, ${0.6 * intensity})`);
+            }
+            
+            // Vẽ chùm tia chính
+            ctx.beginPath();
+            ctx.moveTo(beamCanvas.width * 0.1, beamCanvas.height / 2 - 20);
+            ctx.bezierCurveTo(
+                beamCanvas.width * 0.3, beamCanvas.height / 2 - 40,
+                beamCanvas.width * 0.6, beamCanvas.height / 2 - 10,
+                beamCanvas.width * 0.9, beamCanvas.height / 2 - 100 * focus
+            );
+            ctx.lineTo(beamCanvas.width * 0.9, beamCanvas.height / 2 + 100 * focus);
+            ctx.bezierCurveTo(
+                beamCanvas.width * 0.6, beamCanvas.height / 2 + 10,
+                beamCanvas.width * 0.3, beamCanvas.height / 2 + 40,
+                beamCanvas.width * 0.1, beamCanvas.height / 2 + 20
+            );
+            ctx.closePath();
+            
+            // Tô màu chùm tia
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Thêm hiệu ứng glow
+            ctx.shadowBlur = 30;
+            ctx.shadowColor = isRgbOn ? 'rgba(150, 150, 255, 0.7)' : 'rgba(255, 220, 150, 0.7)';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            
+            // Vẽ các hạt bụi
+            drawParticles();
+        }
+        
+        // Vẽ các hạt bụi
+        function drawParticles() {
+            particles.forEach(particle => {
+                // Cập nhật vị trí
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                
+                // Đảm bảo hạt không ra khỏi canvas
+                if (particle.x < 0 || particle.x > beamCanvas.width) particle.speedX *= -1;
+                if (particle.y < 0 || particle.y > beamCanvas.height) particle.speedY *= -1;
+                
+                // Vẽ hạt
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity * intensity})`;
+                ctx.fill();
+            });
+        }
+        
+        // Cập nhật hình ảnh chiếu
+        function updateProjection() {
+            // Áp dụng hiệu ứng tiêu cự
+            projectedImage.style.filter = `blur(${Math.abs(1 - focus) * 3}px) brightness(${intensity})`;
+            
+            // Áp dụng hiệu ứng RGB nếu bật
+            if (isRgbOn) {
+                projectedImage.style.filter += ` hue-rotate(${Math.sin(Date.now() / 1000) * 30}deg)`;
+            }
+        }
+        
+        // Xử lý sự kiện
+        powerBtn.addEventListener('click', () => {
+            isPoweredOn = !isPoweredOn;
+            powerBtn.textContent = isPoweredOn ? 'Tắt Máy' : 'Bật Máy';
+            powerBtn.classList.toggle('active', isPoweredOn);
+            
+            // Khởi tạo lại các hạt khi bật máy
+            if (isPoweredOn) {
+                initParticles();
+            }
+        });
+        
+        rgbBtn.addEventListener('click', () => {
+            isRgbOn = !isRgbOn;
+            rgbBtn.textContent = `RGB: ${isRgbOn ? 'Bật' : 'Tắt'}`;
+            rgbBtn.classList.toggle('active', isRgbOn);
+        });
+        
+        intensitySlider.addEventListener('input', () => {
+            intensity = parseFloat(intensitySlider.value);
+        });
+        
+        focusSlider.addEventListener('input', () => {
+            focus = parseFloat(focusSlider.value);
+        });
+        
+        particlesSlider.addEventListener('input', () => {
+            particleDensity = parseInt(particlesSlider.value);
+            if (isPoweredOn) {
+                initParticles();
+            }
+        });
+        
+        // Xử lý tooltip
+        document.querySelectorAll('.component').forEach(component => {
+            component.addEventListener('mouseover', (e) => {
+                const rect = component.getBoundingClientRect();
+                tooltip.textContent = component.getAttribute('data-tooltip');
+                tooltip.style.left = `${rect.left + rect.width / 2}px`;
+                tooltip.style.top = `${rect.top - 10}px`;
+                tooltip.style.opacity = '1';
+                tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+            });
+            
+            component.addEventListener('mouseout', () => {
+                tooltip.style.opacity = '0';
+            });
+        });
+        
+        // Xử lý phím tắt
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                powerBtn.click();
+            } else if (e.code === 'KeyR') {
+                e.preventDefault();
+                rgbBtn.click();
+            }
+        });
+        
+        // Vòng lặp animation
+        function animate() {
+            drawBeam();
+            updateProjection();
+            requestAnimationFrame(animate);
+        }
+        
+        // Khởi tạo và bắt đầu animation
+        initParticles();
+        animate();
+        
+        // Xử lý resize window
+        window.addEventListener('resize', () => {
+            beamCanvas.width = beamCanvas.offsetWidth;
+            beamCanvas.height = beamCanvas.offsetHeight;
+            initParticles();
         });
     </script>
 </body>
