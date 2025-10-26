@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skaz - Định vị antiban. Giải pháp bảo mật và bảo vệ vị trí tối ưu.">
+    <title>Skaz - Định vị Antiban</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Biến CSS */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #0f0f1a;
+            --neon-primary: #8a2be2;
+            --neon-secondary: #00ffff;
+            --neon-accent: #ff00ff;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3cc;
+            --glow-intensity: 0 0 10px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Layers */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(10, 10, 15, 0.9) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(10, 10, 15, 0.9) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .bg-noise {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/png;base64,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');
+            opacity: 0.05;
+            z-index: 2;
+        }
+
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--neon-secondary), transparent);
+            box-shadow: 0 0 10px var(--neon-secondary);
+            opacity: 0;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* Main Content */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-shadow: 
+                var(--glow-intensity) var(--neon-primary),
+                0 0 20px var(--neon-primary),
+                0 0 30px var(--neon-primary);
+            color: var(--text-primary);
+            position: relative;
+            opacity: 0;
+            transform: translateZ(50px);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: var(--neon-secondary);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+            background: transparent;
+            border: 2px solid var(--neon-secondary);
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.3s ease;
+            box-shadow: 
+                var(--glow-intensity) var(--neon-secondary),
+                inset 0 0 15px rgba(0, 255, 255, 0.1);
+        }
+
+        .download-btn:hover, .download-btn:focus {
+            box-shadow: 
+                0 0 20px var(--neon-secondary),
+                inset 0 0 20px rgba(0, 255, 255, 0.3);
+            transform: translateY(30px) scale(1.05);
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .download-btn:active {
+            transform: translateY(30px) scale(0.98);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            60% {
+                transform: translate(2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 
+                    var(--glow-intensity) var(--neon-secondary),
+                    inset 0 0 15px rgba(0, 255, 255, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 25px var(--neon-secondary),
+                    inset 0 0 25px rgba(0, 255, 255, 0.2);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .main-title {
+                font-size: 2rem;
+                letter-spacing: 0.1em;
+                margin-bottom: 2rem;
+            }
+
+            .download-btn {
+                font-size: 1.2rem;
+                padding: 1rem 2rem;
+            }
+        }
+
+        /* Utility Classes */
+        .fade-in {
+            animation: fadeIn 1s forwards;
+        }
+
+        .glitch-effect {
+            animation: glitch 0.3s;
+        }
+
+        .pulse-effect {
+            animation: pulse 2s infinite;
+        }
+
+        .no-js-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background: #ff0000;
+            color: white;
+            text-align: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background layers -->
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+    <div class="vignette"></div>
+    <div class="scan-line"></div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="main-title" id="typing-text">
+            <span id="typed-text"></span><span class="cursor"></span>
+        </h1>
+        
+        <a href="https://www.mediafire.com/file/y63a8ubl68dqws0/Skazdz.zip/file" 
+           class="download-btn" 
+           id="download-btn"
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Tải xuống Skaz Antiban">
+            TẢI SKAZ
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2025 Skaz
+    </div>
+
+    <!-- No JS Warning -->
+    <div class="no-js-warning" id="no-js-warning">
+        JavaScript bị tắt. Một số hiệu ứng có thể không hoạt động.
+    </div>
+
+    <script>
+        // Hiển thị cảnh báo nếu JS bị tắt
+        document.getElementById('no-js-warning').style.display = 'none';
+        
+        // Khởi tạo biến
+        const titleText = "ĐỊNH VỊ ANTIBAN";
+        const typingElement = document.getElementById('typed-text');
+        const cursorElement = document.querySelector('.cursor');
+        const downloadBtn = document.getElementById('download-btn');
+        const mainTitle = document.getElementById('typing-text');
+        const scanLine = document.querySelector('.scan-line');
+        
+        // Hàm gõ chữ
+        function typeWriter(text, element, speed, callback) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    cursorElement.style.animation = 'none';
+                    if (callback) callback();
+                }
+            }
+            
+            type();
+        }
+        
+        // Hàm quét dòng
+        function scanLineEffect() {
+            scanLine.style.opacity = '1';
+            scanLine.style.top = '0';
+            
+            setTimeout(() => {
+                scanLine.style.transition = 'top 0.8s ease';
+                scanLine.style.top = '100%';
+                
+                setTimeout(() => {
+                    scanLine.style.opacity = '0';
+                    scanLine.style.transition = 'none';
+                    scanLine.style.top = '0';
+                }, 1000);
+            }, 300);
+        }
+        
+        // Hàm hiển thị nút
+        function showDownloadButton() {
+            downloadBtn.style.transition = 'opacity 1s ease, transform 1s ease';
+            downloadBtn.style.opacity = '1';
+            downloadBtn.style.transform = 'translateY(0)';
+            
+            setTimeout(() => {
+                downloadBtn.classList.add('pulse-effect');
+            }, 1500);
+        }
+        
+        // Hiệu ứng glitch khi click nút
+        function addGlitchEffect() {
+            downloadBtn.classList.add('glitch-effect');
+            setTimeout(() => {
+                downloadBtn.classList.remove('glitch-effect');
+            }, 600);
+        }
+        
+        // Hiệu ứng parallax khi di chuột
+        function handleMouseMove(e) {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            const container = document.querySelector('.container');
+            
+            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        }
+        
+        // Khởi tạo trang
+        function init() {
+            // Fade-in background
+            document.body.classList.add('fade-in');
+            
+            // Bắt đầu animation sau 0.8s
+            setTimeout(() => {
+                // Bắt đầu hiệu ứng gõ chữ
+                typeWriter(titleText, typingElement, 100, () => {
+                    // Sau khi gõ xong
+                    setTimeout(() => {
+                        // Hiệu ứng quét dòng
+                        scanLineEffect();
+                        
+                        // Hiển thị nút sau khi quét
+                        setTimeout(showDownloadButton, 800);
+                    }, 300);
+                });
+                
+                // Hiển thị tiêu đề
+                mainTitle.style.opacity = '1';
+            }, 800);
+            
+            // Thêm sự kiện di chuột cho parallax
+            document.addEventListener('mousemove', handleMouseMove);
+            
+            // Thêm sự kiện click cho nút
+            downloadBtn.addEventListener('click', addGlitchEffect);
+            
+            // Thêm sự kiện keyboard
+            downloadBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    addGlitchEffect();
+                }
+            });
+        }
+        
+        // Chạy khi trang đã tải xong
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        
+        // Fallback nếu JS bị tắt
+        document.addEventListener('DOMContentLoaded', function() {
+            const noScriptElements = document.querySelectorAll('.no-js');
+            noScriptElements.forEach(el => {
+                el.style.display = 'block';
+            });
+            
+            // Hiển thị tiêu đề ngay lập tức nếu JS bị tắt
+            if (typingElement.textContent === '') {
+                typingElement.textContent = titleText;
+                mainTitle.style.opacity = '1';
+                downloadBtn.style.opacity = '1';
+                downloadBtn.style.transform = 'translateY(0)';
+            }
+        });
+    </script>
+</body>
+</html>
